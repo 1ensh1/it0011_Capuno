@@ -1,2 +1,16 @@
-name = "Rome"
-print("My name is:", name)
+fname = input("Enter First Name:")
+lname = input("Enter Last Name:")
+mname = input("Enter Middle Name:")
+birthday = input("Enter Birthday:")
+gender = input("Enter Gender:")
+address = input("Enter Address:")
+course = input("Enter Course:")
+yearlvl = input("Enter Year Level:")
+
+print("\nUser Details:")
+print("Full Name:", fname, mname, lname)
+print("Birthdate:", birthday)
+print("Gender:", gender)
+print("Address:", address)
+print("Course:", course)
+print("Year Level:", yearlvl)
