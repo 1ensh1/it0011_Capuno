@@ -1,0 +1,31 @@
+user_input = input("Enter a String: " ) 
+
+vowels_count = 0
+consonant_count = 0
+number_count = 0
+space_count = 0
+other_count = 0 # = !@#$%^&*()
+
+vowels = 'aeiou'
+consonants = 'bcdfghijklmnpqrstvwxyz'
+numbers = '0123456789'
+
+for char in user_input: #loop para makuha yung kada character ng string 
+    char = char.lower() #to_lower
+    if char in vowels:
+        vowels_count += 1
+    elif char in consonants:
+        consonant_count += 1
+    elif char in numbers:
+        number_count += 1
+    elif char == " ":
+        space_count += 1
+    else: 
+        other_count += 1
+
+
+print("Vowels in String:           ", vowels_count)
+print("Consonants in String:       ", consonant_count)
+print("Numbers in String:          ", number_count)
+print("Whitespaces in String:      ", space_count)
+print("Other Characters in String: ", other_count)
