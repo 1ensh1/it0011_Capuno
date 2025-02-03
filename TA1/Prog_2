@@ -1,0 +1,10 @@
+user_input = input("Enter a string: ")
+
+sum = 0;
+numbers = "0123456789"
+
+for char in user_input: #medyo same lang ng procedure sa una
+    if char in numbers:
+        sum += int(char)
+
+print("Sum of digits in String: ", sum)
