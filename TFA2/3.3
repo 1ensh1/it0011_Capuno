@@ -1,0 +1,16 @@
+f = open("TFA2\students.txt", "a")
+
+lname = input("Enter last name: ")
+fname = input("Enter first name: ")
+age = input("Enter age: ")
+contact = input("Enter contact number: ")
+course = input("Enter course: ")
+
+
+f.write("Last Name: " + lname + "\n")
+f.write("First Name: " + fname + "\n")
+f.write("Age: " + age + "\n")
+f.write("Contact Number: " + contact + "\n")
+f.write("Course: " + course + "\n")
+f.close()
+print("Student information has been saved to 'students.txt")
