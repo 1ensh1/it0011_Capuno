@@ -1,28 +1,19 @@
-sum_list = []
-f = open("numbers.txt", "r")
-line = f.readline()
-label = 1
-while line!= '':
-  line = line.strip()
-  line = line.split(",")
-  original_line = line
-  numbers = [int(num) for num in line]
-  line_sum = sum(numbers)
-  sum_list.append(line_sum)
-  line = f.readline()
-  for elements in sum_list:
-    x = 0
-    string_elements = str(elements)
-    for digit in string_elements:
-      if x == 0:
-        a = digit
-      x += 1
-    b = digit
-    c = f"{a} - {b}"
+f = open("Technical_Midterm_Exam\\numbers.txt", 'r')
+lines = f.readlines()
 
-    if eval(c) == 0:
-      palendrome = True
-    else:
-      palendrome = False
-  print(f"Line {label}: {','.join(original_line)} (sum {line_sum}) - {'Palindrome' if palendrome == True else 'Not a palindrome'}")
-  label += 1
+index = 1
+for line in lines:
+    line = line.strip()
+    if line: 
+        numbers = line.split(',')
+        numbers = [int(num) for num in numbers]
+        total = sum(numbers)
+
+        total_str = str(total)
+        if total_str == total_str[::-1]:
+            status = "Palindrome"
+        else:
+            status = "Not a palindrome"
+
+        print("Line", index, ":", ', '.join(map(str, numbers)), "(sum", total, ") -", status)
+f.close()
