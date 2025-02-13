@@ -1,5 +1,6 @@
 f = open("Technical_Midterm_Exam\\numbers.txt", 'r')
 lines = f.readlines()
+f.close() 
 
 index = 1
 for line in lines:
@@ -16,4 +17,4 @@ for line in lines:
             status = "Not a palindrome"
 
         print("Line", index, ":", ', '.join(map(str, numbers)), "(sum", total, ") -", status)
-f.close()
+        index += 1  
