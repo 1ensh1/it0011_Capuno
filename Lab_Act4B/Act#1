@@ -1,0 +1,20 @@
+A = {'a','b','c','d','f','g'}
+B = {'b','c','h','l','m','o'}
+C = {'c','d','f','h','i','j','k'}
+
+
+print("How many elements are there in set A and B?")
+print("Number of elements in A:", len(A))
+print("Number of elements in B:", len(B))
+
+BnotinAC = B - (A | C)
+print("\nHow many elements are there in B that is not part in A and C?")
+print("Number of elements in B but not in A and C:", len(BnotinAC))
+
+print("\nShow the following using set operations:")
+print("i.   ",sorted(C - A))
+print("ii.  ", sorted(A & C))
+print("iii. ", sorted(A & B | B & C))
+print("iv.  ", A & C - {'c'})
+print("v.   ", A & C & B)
+print("vi.  ", sorted(B - A - {'h'}))
