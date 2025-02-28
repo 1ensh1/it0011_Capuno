@@ -1,0 +1,143 @@
+filename = "Activity 04/students.txt" # Filename tapos dito lalagay yung student record
+
+file = open(filename, "a")  #pang check lang - naka-append para walang gagawin pag yung file existing, pero gagawa ng bago if wala
+file.close() 
+
+file = open(filename, "r")  #Read student records sa file tapos i-store sa list
+students = []  # Empty list pang store ng student record
+
+for line in file:
+    data = line.strip().split(",")  # pang remove ng extra space tsaka split gamit comma
+    student_id = data[0]  # First value is yung student ID
+    full_name = (data[1], data[2])  # Second and third gumagawa ng tuple para sa full name (First Name, Last Name)
+    class_standing = float(data[3])  # ginagawang float si class standing and major exam
+    major_exam = float(data[4])  
+    
+    students.append((student_id, full_name, class_standing, major_exam)) # ina-append niya yung student record as a tuple dun sa students list
+ 
+file.close()
+
+
+while True: #main loop
+    print("\nStudent Record Management System")
+    print("1. Show All Student Records")
+    print("2. Show Student Record")
+    print("3. Add Record")
+    print("4. Edit Record")
+    print("5. Delete Record")
+    print("6. Save File")
+    print("7. Save As File")
+    print("8. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        print("\n1. Ordered by Last Name")
+        print("2. Ordered by Grade")
+        sub_choice = input("Enter your choice: ")
+
+        if sub_choice == "1":
+            sorted_students = sorted(students, key=lambda x: x[1][1]) #x represents each student tuple. x[1] refers to the student's full name tuple 
+                                                                        #x[1][1] - kinukuha niya last name ng tuple. Tapos so-sort niya based sa last name
+        elif sub_choice == "2":
+            sorted_students = sorted(students, key=lambda x: ((x[2] * 60 + x[3] * 40) / 100), reverse=True) #x[2] is class standing. x[3] is major exam score.
+        else:                                                                                   #reverse=True makes it descending order (highest grade first).
+            print("Invalid choice!")
+            continue  # Restart the loop if the input is invalid
+
+        print("\nStudent Records:\n")
+        for student in sorted_students:
+            final_grade = (student[2] * 60 + student[3] * 40) / 100  
+            print(f"Student No.: {student[0]}")
+            print(f"Full Name: {student[1][0]} {student[1][1]}")
+            print(f"Final Grade: {final_grade:.2f}\n")  # Display grade rounded to 2 decimal places
+
+    elif choice == "2":
+        student_id = input("Enter Student ID: ")
+        found = False  # pang check if student is found
+
+        for student in students:
+            if student[0] == student_id:  # Compare student ID
+                final_grade = (student[2] * 60 + student[3] * 40) / 100
+                print("\nStudent Record:")
+                print(f"Student No.: {student[0]}")
+                print(f"Full Name: {student[1][0]} {student[1][1]}")
+                print(f"Class Standing: {student[2]}")
+                print(f"Major Exam Score: {student[3]}")
+                print(f"Final Grade: {final_grade:.2f}")
+                found = True  # Student was found
+                break 
+
+        if not found:
+            print("Student not found!")
+
+    elif choice == "3":
+        while True:
+            student_id = input("Enter Student ID (6 digits): ")
+
+            if len(student_id) != 6:  # Check if it's exactly 6 digits
+                print("Student ID must be exactly 6 digits!")
+                continue  # Restart the loop
+
+            if not student_id.isdigit():  # Check if it contains only numbers
+                print("Student ID must contain only numbers!")
+                continue  # Restart the loop
+
+            break  # Exit the loop if input is valid
+
+        first_name = input("Enter First Name: ")
+        last_name = input("Enter Last Name: ")
+        class_standing = float(input("Enter Class Standing Grade: "))
+        major_exam = float(input("Enter Major Exam Grade: "))
+
+        students.append((student_id, (first_name, last_name), class_standing, major_exam))  # Append new student record as a tuple
+        print("Record added successfully!")
+
+    elif choice == "4":
+        student_id = input("Enter Student ID to edit: ")
+
+        for i in range(len(students)):
+            if students[i][0] == student_id:  # Find student by ID
+                first_name = input("Enter New First Name: ")
+                last_name = input("Enter New Last Name: ")
+                class_standing = float(input("Enter New Class Standing Grade: "))
+                major_exam = float(input("Enter New Major Exam Grade: "))
+
+                students[i] = (student_id, (first_name, last_name), class_standing, major_exam) # inu-update student record with new values
+                print("Record updated successfully!")
+                break
+        else:
+            print("Student not found!")
+
+    elif choice == "5":
+        student_id = input("Enter Student ID to delete: ")
+
+        for i in range(len(students)):
+            if students[i][0] == student_id:
+                del students[i]  #Remove student from list
+                print("Record deleted successfully!")
+                break
+        else:
+            print("Student not found!")
+
+    elif choice == "6":
+        file = open(filename, "w")  # write mode
+        for student in students:
+            file.write(f"{student[0]},{student[1][0]},{student[1][1]},{student[2]},{student[3]}\n") #naka csv format
+        file.close()
+        print("File saved successfully!")
+
+    elif choice == "7":
+        new_filename = input("Enter new filename: ")
+        file = open(new_filename, "w")  # new file - write mode
+        for student in students:
+            file.write(f"{student[0]},{student[1][0]},{student[1][1]},{student[2]},{student[3]}\n")
+        file.close()
+        print("File saved as successfully!")
+
+    elif choice == "8":
+        print("Exiting program...")
+        break  # Exit ng loop para ma-stop yung program
+
+    else:
+        print("Invalid choice! Please try again.")
