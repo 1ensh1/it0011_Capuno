@@ -1,0 +1,20 @@
+exchange_rates = {}
+#converted the csv to txt
+with open("C:\\Users\\User\\Documents\\TA1\\it0011_Capuno\\Lab_Act4B\\currency.txt", mode="r") as file:
+    next(file)
+    for line in file:
+        parts = line.strip().split(',')
+        if len(parts) == 2:  
+            currency = parts[0].strip()
+            rate = float(parts[1].strip())  
+            exchange_rates[currency] = rate
+
+dollar_amount = float(input("How much dollar do you have? "))
+currency = input("What currency you want to have? ").upper()
+
+print(f"\nDollar: {dollar_amount} USD")
+if currency in exchange_rates:
+    converted_currency = dollar_amount * exchange_rates[currency]
+    print(f"{currency}: {converted_currency}")
+else:
+    print("Currency not found in the list.")
