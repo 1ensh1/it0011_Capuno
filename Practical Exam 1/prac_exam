@@ -1,0 +1,69 @@
+def get_filtered_words(text):
+    exclude_words = ["and", "but", "or", "nor", "for", "so", "yet", "a", "an", "the", "of"] #list of words to exlude (coordinating conjunctions, articles, and 'of')
+    
+    word_list = []                              #empty list para ma-store yung words
+    current_word = ""                           #para ma-store yung current word kada basa ng characters
+
+    for char in text:                           #loop through each character sa text
+        if char.isalnum():                      #Check if the character is a letter or number
+            current_word += char                # Bini-build neto yung word character by character
+        else:
+            if current_word:                    # Pag yung word nabuilt na, add lang sa list
+                word_list.append(current_word)  
+                current_word = ""               #Reset for next word
+
+    if current_word:                            #Add last word if there is one after the loop
+        word_list.append(current_word)
+
+    filtered_words = []                         #Fini-filter yung words dun sa exclude list
+    for word in word_list:
+        if word.lower() not in exclude_words:   #Convert to lowercase for comparison
+            filtered_words.append(word)         #Add word to filtered list
+
+    return filtered_words                       #Nire-return yung list ng valid words
+
+def count_words(word_list):
+    word_counts = {}                            #Empty dictionary para ma store yung word counts
+
+    for word in word_list:                      #Loop through the list of words
+        if word in word_counts:
+            word_counts[word] += 1              #Pag yung word already exists increase yung count
+        else:
+            word_counts[word] = 1               #Kung hindi add yung word with count 1
+
+    return word_counts                          
+
+def separate_and_sort_words(word_counts):
+    lowercase_words = []                        #2 empty lists pang store ng lower and uppercase words separately
+    uppercase_words = []
+
+    for word in word_counts:                    #Loop through dun sa dictionary ng words and counts
+        if word.islower():                      #Pag yung word lower case ia-add siya sa lowercase na list
+            lowercase_words.append((word, word_counts[word]))
+        else:
+            uppercase_words.append((word, word_counts[word]))   #Else uppercase word siya so sa uppercase list malalagay
+
+    lowercase_words.sort()                      #Sort yung both list alphabetically by word
+    uppercase_words.sort()
+
+    return lowercase_words, uppercase_words     #Return yung sorted na list
+
+def results(lowercase_words, uppercase_words, total_count):
+    for word, count in lowercase_words:         #Print yung lowercase words muna 
+        print(f"{word.ljust(10)} - {count}")    #Pang align ng words 
+
+    for word, count in uppercase_words:         #Yung uppercase words naman ipri-print
+        print(f"{word.ljust(10)} - {count}")
+
+    print(f"Total words filtered: {total_count}") #Pri-print yung total number of filtered words
+
+def main():                                     #Main Function parang c++ 
+    text = input("Enter a string statement:\n") 
+    
+    filtered_words = get_filtered_words(text)   #Kukunin niya muna yung words tapos ifi-filter
+    word_counts = count_words(filtered_words)   #Co-count kung ilang beses lumabas yung word
+    lowercase_words, uppercase_words = separate_and_sort_words(word_counts) #Separate ng lowercase and uppercase words tapos sort
+
+    results(lowercase_words, uppercase_words, sum(word_counts.values())) #call results function
+
+main()
